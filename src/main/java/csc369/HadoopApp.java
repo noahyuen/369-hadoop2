@@ -27,7 +27,22 @@ public class HadoopApp {
 	if (otherArgs.length < 3) {
 	    System.out.println("Expected parameters: <job class> [<input dir>]+ <output dir>");
 	    System.exit(-1);
-	} else if ("UserMessages".equalsIgnoreCase(otherArgs[0])) {
+	} else if ("Query1".equalsIgnoreCase(otherArgs[0])) {
+
+		conf.set("mapreduce.input.keyvaluelinerecordreader.key.value.separator", ",");
+
+		MultipleInputs.addInputPath(job, new Path(otherArgs[1]),
+				KeyValueTextInputFormat.class, Query1.AccessLogMapper.class);
+		MultipleInputs.addInputPath(job, new Path(otherArgs[2]),
+				TextInputFormat.class, Query1.HostCountryMapper.class);
+
+		job.setReducerClass(UserMessages.JoinReducer.class);
+
+		job.setOutputKeyClass(UserMessages.OUTPUT_KEY_CLASS);
+		job.setOutputValueClass(UserMessages.OUTPUT_VALUE_CLASS);
+		FileOutputFormat.setOutputPath(job, new Path(otherArgs[3]));
+	}
+	else if ("UserMessages".equalsIgnoreCase(otherArgs[0])) {
 
 	    conf.set("mapreduce.input.keyvaluelinerecordreader.key.value.separator",",");
 
