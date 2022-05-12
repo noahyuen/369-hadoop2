@@ -1,3 +1,36 @@
+1. Query 1: Request count for each country
+
+./gradlew run --args="Query1 input_host/access.log input_host/hostname_country.csv query1_out1"
+./gradlew run --args="Query1Sort query1_out1 query1_out2"
+./gradlew run --args="Query1Sort2 query1_out2 query1_out3"
+cat query1_out3/part-r-00000
+
+812	Unknown Location
+198	Intranet
+127	Canada
+87	United States
+80	Robot
+19	Israel
+17	Australia
+16	France
+13	Wherever You Want to Ship
+13	Germany
+6	United Kingdom
+4	Korea
+4	Spain
+4	Denmark
+2	Netherlands
+1	Los Alamos
+1	Taiwan
+1	Finland
+1	Mexico
+
+2. Query 2: Url count for each country
+
+./gradlew run --args="Query2 input_host/access.log input_host/hostname_country.csv query2_out1"
+./gradlew run --args="Query2Sort query2_out1 query2_out2"
+cat query2_out2/part-r-00000
+
 Australia	2	/twiki/bin/view/Main/SpamAssassinAndPostFix
 Australia	2	/mailman/listinfo
 Australia	2	/twiki/bin/view/Main/SpamAssassinDeleting
@@ -1171,3 +1204,6 @@ Wherever You Want to Ship	1	/dccstats/stats-spam.1year.png
 Wherever You Want to Ship	1	/
 Wherever You Want to Ship	1	/dccstats/stats-spam.1week.png
 Wherever You Want to Ship	1	/dccstats/stats-spam-ratio.1month.png
+
+
+
