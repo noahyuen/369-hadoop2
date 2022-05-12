@@ -32,14 +32,14 @@ public class HadoopApp {
 		conf.set("mapreduce.input.keyvaluelinerecordreader.key.value.separator", ",");
 
 		MultipleInputs.addInputPath(job, new Path(otherArgs[1]),
-				KeyValueTextInputFormat.class, Query1.AccessLogMapper.class);
+				TextInputFormat.class, Query1.AccessLogMapper.class);
 		MultipleInputs.addInputPath(job, new Path(otherArgs[2]),
 				TextInputFormat.class, Query1.HostCountryMapper.class);
 
-		job.setReducerClass(UserMessages.JoinReducer.class);
+		job.setReducerClass(Query1.JoinReducer.class);
 
-		job.setOutputKeyClass(UserMessages.OUTPUT_KEY_CLASS);
-		job.setOutputValueClass(UserMessages.OUTPUT_VALUE_CLASS);
+		job.setOutputKeyClass(Query1.OUTPUT_KEY_CLASS);
+		job.setOutputValueClass(Query1.OUTPUT_VALUE_CLASS);
 		FileOutputFormat.setOutputPath(job, new Path(otherArgs[3]));
 	}
 	else if ("UserMessages".equalsIgnoreCase(otherArgs[0])) {
