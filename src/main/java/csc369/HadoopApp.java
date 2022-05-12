@@ -41,6 +41,20 @@ public class HadoopApp {
 		job.setOutputKeyClass(Query1.OUTPUT_KEY_CLASS);
 		job.setOutputValueClass(Query1.OUTPUT_VALUE_CLASS);
 		FileOutputFormat.setOutputPath(job, new Path(otherArgs[3]));
+	} else if ("Query2".equalsIgnoreCase(otherArgs[0])) {
+
+		conf.set("mapreduce.input.keyvaluelinerecordreader.key.value.separator", ",");
+
+		MultipleInputs.addInputPath(job, new Path(otherArgs[1]),
+				TextInputFormat.class, Query2.AccessLogMapper.class);
+		MultipleInputs.addInputPath(job, new Path(otherArgs[2]),
+				TextInputFormat.class, Query2.HostCountryMapper.class);
+
+		job.setReducerClass(Query2.JoinReducer.class);
+
+		job.setOutputKeyClass(Query2.OUTPUT_KEY_CLASS);
+		job.setOutputValueClass(Query2.OUTPUT_VALUE_CLASS);
+		FileOutputFormat.setOutputPath(job, new Path(otherArgs[3]));
 	}
 	else if ("UserMessages".equalsIgnoreCase(otherArgs[0])) {
 
