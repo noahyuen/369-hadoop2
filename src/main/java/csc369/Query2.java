@@ -50,7 +50,7 @@ public class Query2 {
 
 
     //  Reducer: just one reducer class to perform the "join"
-    public static class JoinReducer extends  Reducer<Text, MapWritable, Text, MapWritable> {
+    public static class JoinReducer extends  Reducer<Text, MapWritable, Text, Text> {
 
         @Override
         public void reduce(Text key, Iterable<MapWritable> values, Context context)  throws IOException, InterruptedException {
@@ -71,9 +71,11 @@ public class Query2 {
             }
 
             for (Map.Entry<Text, Integer> entry : urlCount.entrySet()) {
-                MapWritable out = new MapWritable();
-                out.put(entry.getKey(), new IntWritable(entry.getValue()));
-                context.write(country, out);
+                StringBuilder sb = new StringBuilder();
+                sb.append(entry.getKey().toString());
+                sb.append(" ");
+                sb.append(entry.getValue().toString());
+                context.write(country, new Text(sb.toString()));
             }
         }
     }
